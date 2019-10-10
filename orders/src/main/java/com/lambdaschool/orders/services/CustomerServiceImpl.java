@@ -1,5 +1,6 @@
 package com.lambdaschool.orders.services;
 
+import com.lambdaschool.orders.models.Agent;
 import com.lambdaschool.orders.models.Customer;
 import com.lambdaschool.orders.repositories.CustomerRepo;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -26,10 +27,34 @@ public class CustomerServiceImpl implements CustomerService
         return rtnList;
     }
 
+    @Transactional
     @Override
     public Customer save(Customer customer)
     {
-        return null;
+        Customer newCustomer = new Customer();
+
+        newCustomer.setCustname(customer.getCustname());
+        newCustomer.setCustcity(customer.getCustcity());
+        newCustomer.setWorkingarea(customer.getWorkingarea());
+        newCustomer.setCustcountry(customer.getCustcountry());
+        newCustomer.setGrade(customer.getGrade());
+        newCustomer.setOpeningamt(customer.getOpeningamt());
+        newCustomer.setRecieveamt(customer.getRecieveamt());
+        newCustomer.setPaymentamt(customer.getPaymentamt());
+        newCustomer.setOutstandingamt(customer.getOutstandingamt());
+        newCustomer.setPhone(customer.getPhone());
+//        newCustomer.setAgent(customer.getAgent());
+
+        for (Agent a : customer.getAgent())
+        {
+            newCustomer.getAgent().add(new Agent(a.getAgentname(),
+                                                a.getWorkingarea(),
+                                                a.getCommission(),
+                                                a.getPhone(),
+                                                a.getCountry(),
+                                                newCustomer));
+        }
+        return custrepos.save(newCustomer);
     }
 
     @Override
