@@ -3,6 +3,8 @@ package com.lambdaschool.orders.models;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
 import javax.persistence.*;
+import java.util.ArrayList;
+import java.util.List;
 
 @Entity
 @Table(name = "customers")
@@ -12,47 +14,46 @@ public class Customer
     @GeneratedValue(strategy = GenerationType.AUTO)
     private long custcode;
 
-    @Column(unique = true,
-    nullable = false)
-    private String cust_name;
+    @Column(nullable = false)
+    private String custname;
 
-    private String cust_city;
-    private String working_area;
-    private String cust_country;
+    private String custcity;
+    private String workingarea;
+    private String custcountry;
     private String grade;
-    private double open_in_gamt;
-    private double recieve_amt;
-    private double payment_amt;
-    private double outstanding_amt;
+    private double openingamt;
+    private double recieveamt;
+    private double paymentamt;
+    private double outstandingamt;
     private String phone;
 
-    @Column(unique = true,
-            nullable = false)
-    private long agent_code;
-
     @ManyToOne
-    @JoinColumn(name = "agentcode",  // links many menus to one restaurant
+    @JoinColumn(name = "agentcode",  // links many Customers to one agent
             nullable = false)
     @JsonIgnoreProperties("customers")
     private Agent agent;
+
+
+    @OneToMany(mappedBy = "customer", cascade = CascadeType.ALL)
+    @JsonIgnoreProperties("customer")
+    private List<Order> orders = new ArrayList<>();
 
     public Customer()
     {
     }
 
-    public Customer(String cust_name, String cust_city, String working_area, String cust_country, String grade, double open_in_gamt, double recieve_amt, double payment_amt, double outstanding_amt, String phone, long agent_code, Agent agent)
+    public Customer(String custname, String custcity, String working_area, String custcountry, String grade, double openingamt, double recieveamt, double paymentamt, double outstandingamt, String phone, Agent agent)
     {
-        this.cust_name = cust_name;
-        this.cust_city = cust_city;
-        this.working_area = working_area;
-        this.cust_country = cust_country;
+        this.custname = custname;
+        this.custcity = custcity;
+        this.workingarea = working_area;
+        this.custcountry = custcountry;
         this.grade = grade;
-        this.open_in_gamt = open_in_gamt;
-        this.recieve_amt = recieve_amt;
-        this.payment_amt = payment_amt;
-        this.outstanding_amt = outstanding_amt;
+        this.openingamt = openingamt;
+        this.recieveamt = recieveamt;
+        this.paymentamt = paymentamt;
+        this.outstandingamt = outstandingamt;
         this.phone = phone;
-        this.agent_code = agent_code;
         this.agent = agent;
     }
 
@@ -66,44 +67,44 @@ public class Customer
         this.custcode = custcode;
     }
 
-    public String getCust_name()
+    public String getCustname()
     {
-        return cust_name;
+        return custname;
     }
 
-    public void setCust_name(String cust_name)
+    public void setCustname(String custname)
     {
-        this.cust_name = cust_name;
+        this.custname = custname;
     }
 
-    public String getCust_city()
+    public String getCustcity()
     {
-        return cust_city;
+        return custcity;
     }
 
-    public void setCust_city(String cust_city)
+    public void setCustcity(String custcity)
     {
-        this.cust_city = cust_city;
+        this.custcity = custcity;
     }
 
-    public String getWorking_area()
+    public String getWorkingarea()
     {
-        return working_area;
+        return workingarea;
     }
 
-    public void setWorking_area(String working_area)
+    public void setWorkingarea(String workingarea)
     {
-        this.working_area = working_area;
+        this.workingarea = workingarea;
     }
 
-    public String getCust_country()
+    public String getCustcountry()
     {
-        return cust_country;
+        return custcountry;
     }
 
-    public void setCust_country(String cust_country)
+    public void setCustcountry(String custcountry)
     {
-        this.cust_country = cust_country;
+        this.custcountry = custcountry;
     }
 
     public String getGrade()
@@ -116,44 +117,44 @@ public class Customer
         this.grade = grade;
     }
 
-    public double getOpen_in_gamt()
+    public double getOpeningamt()
     {
-        return open_in_gamt;
+        return openingamt;
     }
 
-    public void setOpen_in_gamt(double open_in_gamt)
+    public void setOpeningamt(double openingamt)
     {
-        this.open_in_gamt = open_in_gamt;
+        this.openingamt = openingamt;
     }
 
-    public double getRecieve_amt()
+    public double getRecieveamt()
     {
-        return recieve_amt;
+        return recieveamt;
     }
 
-    public void setRecieve_amt(double recieve_amt)
+    public void setRecieveamt(double recieveamt)
     {
-        this.recieve_amt = recieve_amt;
+        this.recieveamt = recieveamt;
     }
 
-    public double getPayment_amt()
+    public double getPaymentamt()
     {
-        return payment_amt;
+        return paymentamt;
     }
 
-    public void setPayment_amt(double payment_amt)
+    public void setPaymentamt(double paymentamt)
     {
-        this.payment_amt = payment_amt;
+        this.paymentamt = paymentamt;
     }
 
-    public double getOutstanding_amt()
+    public double getOutstandingamt()
     {
-        return outstanding_amt;
+        return outstandingamt;
     }
 
-    public void setOutstanding_amt(double outstanding_amt)
+    public void setOutstandingamt(double outstandingamt)
     {
-        this.outstanding_amt = outstanding_amt;
+        this.outstandingamt = outstandingamt;
     }
 
     public String getPhone()
@@ -166,16 +167,6 @@ public class Customer
         this.phone = phone;
     }
 
-    public long getAgent_code()
-    {
-        return agent_code;
-    }
-
-    public void setAgent_code(long agent_code)
-    {
-        this.agent_code = agent_code;
-    }
-
     public Agent getAgent()
     {
         return agent;
@@ -185,4 +176,16 @@ public class Customer
     {
         this.agent = agent;
     }
+
+    public List<Order> getOrders()
+    {
+        return orders;
+    }
+
+    public void setOrders(List<Order> orders)
+    {
+        this.orders = orders;
+    }
 }
+
+

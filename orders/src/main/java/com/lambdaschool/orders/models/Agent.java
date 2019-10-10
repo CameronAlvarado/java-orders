@@ -1,6 +1,5 @@
 package com.lambdaschool.orders.models;
 
-
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
 import javax.persistence.*;
@@ -15,16 +14,13 @@ public class Agent
     @GeneratedValue(strategy = GenerationType.AUTO)
     private long agentcode;
 
-//    @Column(unique = true,
-//    nullable = false)
-    private String agent_name;
-
-    private String working_area;
+    private String agentname;
+    private String workingarea;
     private double commission;
     private String phone;
     private String country;
 
-    @OneToMany(mappedBy = "agent",
+    @OneToMany(mappedBy = "agent", // links one agent to many customers
     cascade = CascadeType.ALL)
     @JsonIgnoreProperties("agent")
     private List<Customer> customers = new ArrayList<>();
@@ -33,10 +29,10 @@ public class Agent
     {
     }
 
-    public Agent(String agent_name, String working_area, double commission, String phone, String country)
+    public Agent(String agentname, String workingarea, double commission, String phone, String country)
     {
-        this.agent_name = agent_name;
-        this.working_area = working_area;
+        this.agentname = agentname;
+        this.workingarea = workingarea;
         this.commission = commission;
         this.phone = phone;
         this.country = country;
@@ -52,24 +48,24 @@ public class Agent
         this.agentcode = agentcode;
     }
 
-    public String getAgent_name()
+    public String getAgentname()
     {
-        return agent_name;
+        return agentname;
     }
 
-    public void setAgent_name(String agent_name)
+    public void setAgentname(String agentname)
     {
-        this.agent_name = agent_name;
+        this.agentname = agentname;
     }
 
-    public String getWorking_area()
+    public String getWorkingarea()
     {
-        return working_area;
+        return workingarea;
     }
 
-    public void setWorking_area(String working_area)
+    public void setWorkingarea(String workingarea)
     {
-        this.working_area = working_area;
+        this.workingarea = workingarea;
     }
 
     public double getCommission()
@@ -101,4 +97,5 @@ public class Agent
     {
         this.country = country;
     }
+
 }
