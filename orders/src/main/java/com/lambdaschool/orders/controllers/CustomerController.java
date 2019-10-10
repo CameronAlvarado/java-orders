@@ -34,6 +34,22 @@ public class CustomerController
         newCustomer = customerService.save(newCustomer);
         return new ResponseEntity<>(HttpStatus.CREATED);
     }
+
     // PUT http://localhost:2020/customers/customer/update/{custcode} --- updating
+    @PutMapping(value = "/customer/update/{custcode}",
+            consumes = {"application/json"})
+    public ResponseEntity<?> updateACustomer(@RequestBody Customer customer,
+                                               @PathVariable long custcode)
+    {
+        customerService.update(customer, custcode);
+        return new ResponseEntity<>(HttpStatus.OK);
+    }
+
     // DELETE http://localhost:2020/customers/customer/delete/{custcode} --- deleting
+    @DeleteMapping("/customer/delete/{custcode}") // assumes value
+    public ResponseEntity<?> deleteCustomerById(@PathVariable long custcode)
+    {
+        customerService.delete(custcode);
+        return new ResponseEntity<>(HttpStatus.OK);
+    }
 }

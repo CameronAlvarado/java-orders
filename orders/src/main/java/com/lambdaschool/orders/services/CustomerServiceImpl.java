@@ -44,7 +44,7 @@ public class CustomerServiceImpl implements CustomerService
         newCustomer.setPaymentamt(customer.getPaymentamt());
         newCustomer.setOutstandingamt(customer.getOutstandingamt());
         newCustomer.setPhone(customer.getPhone());
-//        newCustomer.setAgent(customer.getAgent());
+        newCustomer.setAgent(customer.getAgent());
 
         for (Order o : customer.getOrders()) // getOrder?
         {
@@ -59,12 +59,12 @@ public class CustomerServiceImpl implements CustomerService
     @Override
     public Customer update(Customer customer, long id)
     {
-        return null;
+        return custrepos.save(customer);
     }
 
     @Override
     public void delete(long id)
     {
-
+        custrepos.deleteById(id);
     }
 }
